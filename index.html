@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>PrivaScan – Privacy Policy Analyzer</title>
   <meta name="description"
-    content="Paste any Privacy Policy URL and get an instant AI-powered Privacy Nutrition Label — understand what apps collect about you in seconds." />
+    content="Enter any company name or website URL and get an instant AI-powered Privacy Nutrition Label — understand what apps collect about you in seconds." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap"
@@ -35,91 +35,47 @@
     }
   </script>
   <style>
-    body {
-      background-color: #0f0f1a;
-    }
-
-    .glow {
-      box-shadow: 0 0 40px rgba(99, 102, 241, 0.15);
-    }
-
-    .glow-sm {
-      box-shadow: 0 0 20px rgba(99, 102, 241, 0.1);
-    }
-
+    body { background-color: #0f0f1a; }
+    .glow { box-shadow: 0 0 40px rgba(99, 102, 241, 0.15); }
+    .glow-sm { box-shadow: 0 0 20px rgba(99, 102, 241, 0.1); }
     .gradient-text {
       background: linear-gradient(135deg, #818cf8, #a78bfa, #c084fc);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
     }
-
-    .card-border {
-      border: 1px solid #2a2a45;
-    }
-
+    .card-border { border: 1px solid #2a2a45; }
     .spinner {
-      border: 3px solid rgba(99, 102, 241, 0.2);
-      border-top-color: #6366f1;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-      animation: spin 0.8s linear infinite;
+      border: 3px solid rgba(99, 102, 241, 0.2); border-top-color: #6366f1;
+      border-radius: 50%; width: 20px; height: 20px; animation: spin 0.8s linear infinite;
     }
-
-    @keyframes spin {
-      to {
-        transform: rotate(360deg);
-      }
-    }
-
-    .risk-low {
-      background: rgba(34, 197, 94, 0.12);
-      border: 1px solid rgba(34, 197, 94, 0.3);
-      color: #4ade80;
-    }
-
-    .risk-med {
-      background: rgba(234, 179, 8, 0.12);
-      border: 1px solid rgba(234, 179, 8, 0.3);
-      color: #facc15;
-    }
-
-    .risk-high {
-      background: rgba(239, 68, 68, 0.12);
-      border: 1px solid rgba(239, 68, 68, 0.3);
-      color: #f87171;
-    }
-
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .risk-low { background: rgba(34,197,94,0.12); border: 1px solid rgba(34,197,94,0.3); color: #4ade80; }
+    .risk-med { background: rgba(234,179,8,0.12); border: 1px solid rgba(234,179,8,0.3); color: #facc15; }
+    .risk-high { background: rgba(239,68,68,0.12); border: 1px solid rgba(239,68,68,0.3); color: #f87171; }
     .tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 12px;
-      border-radius: 999px;
-      font-size: 0.75rem;
-      font-weight: 500;
-      background: rgba(99, 102, 241, 0.15);
-      border: 1px solid rgba(99, 102, 241, 0.3);
-      color: #818cf8;
+      display: inline-flex; align-items: center; gap: 6px; padding: 4px 12px;
+      border-radius: 999px; font-size: 0.75rem; font-weight: 500;
+      background: rgba(99,102,241,0.15); border: 1px solid rgba(99,102,241,0.3); color: #818cf8;
     }
-
-    #results {
-      display: none;
-    }
-
+    #results { display: none; }
     .section-label {
-      font-size: 0.65rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      color: #6366f1;
-      margin-bottom: 10px;
+      font-size: 0.65rem; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; color: #6366f1; margin-bottom: 10px;
     }
-
-    .divider {
-      border-color: #2a2a45;
+    .divider { border-color: #2a2a45; }
+    .source-badge {
+      display: inline-flex; align-items: center; gap: 6px; padding: 6px 14px;
+      border-radius: 12px; font-size: 0.75rem; font-weight: 500;
+      background: rgba(99,102,241,0.08); border: 1px solid rgba(99,102,241,0.2); color: #a5b4fc;
+      max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
     }
+    .step-indicator {
+      display: inline-flex; align-items: center; gap: 8px; padding: 4px 14px;
+      border-radius: 999px; font-size: 0.7rem; font-weight: 600;
+      background: rgba(99,102,241,0.1); border: 1px solid rgba(99,102,241,0.25); color: #818cf8;
+      transition: all 0.4s ease;
+    }
+    .step-indicator.active { background: rgba(99,102,241,0.2); color: #a5b4fc; }
+    .step-indicator.done { background: rgba(34,197,94,0.12); border-color: rgba(34,197,94,0.3); color: #4ade80; }
   </style>
 </head>
 
@@ -167,18 +123,19 @@
         Understand <span class="gradient-text">Privacy Policies</span><br />in seconds
       </h1>
       <p class="text-lg text-gray-400 max-w-xl mx-auto leading-relaxed">
-        Paste any Privacy Policy URL. We'll scrape, analyze, and generate a clear <strong class="text-gray-300">Privacy
+        Enter any company name or website URL. We'll automatically find, scrape, and analyze their privacy policy to generate a clear <strong class="text-gray-300">Privacy
           Nutrition Label</strong> — no legalese required.
       </p>
     </div>
 
     <!-- ── INPUT CARD ── -->
     <div class="rounded-2xl card-border glow p-6 mb-8" style="background:#16162a;">
-      <label for="policyUrl" class="block text-sm font-semibold text-gray-300 mb-3">
-        Privacy Policy URL
+      <label for="policyInput" class="block text-sm font-semibold text-gray-300 mb-3">
+        Company Name or URL
       </label>
       <div class="flex flex-col sm:flex-row gap-3">
-        <input id="policyUrl" type="url" placeholder="https://example.com/privacy-policy" autocomplete="off"
+        <input id="policyInput" type="text"
+          placeholder="Enter a Company Name (e.g., Netflix) or Website URL..." autocomplete="off"
           class="flex-1 px-4 py-3 rounded-xl bg-surface border border-surface-border text-white placeholder-gray-600 focus:outline-none focus:border-brand focus:ring-2 focus:ring-brand/20 transition-all duration-200 font-mono text-sm" />
         <button id="scanBtn" onclick="startScan()"
           class="flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold text-sm bg-brand hover:bg-brand-dark active:scale-95 transition-all duration-200 whitespace-nowrap disabled:opacity-50 disabled:cursor-not-allowed">
@@ -190,12 +147,11 @@
         </button>
       </div>
       <p class="mt-3 text-xs text-gray-600">
-        Try: <button onclick="fillExample('https://policies.google.com/privacy')"
-          class="text-brand-light hover:underline">Google</button>,
-        <button onclick="fillExample('https://twitter.com/en/privacy')"
-          class="text-brand-light hover:underline">Twitter/X</button>,
-        <button onclick="fillExample('https://www.apple.com/legal/privacy/')"
-          class="text-brand-light hover:underline">Apple</button>
+        Try:
+        <button onclick="fillExample('Netflix')" class="text-brand-light hover:underline">Netflix</button>,
+        <button onclick="fillExample('Spotify')" class="text-brand-light hover:underline">Spotify</button>,
+        <button onclick="fillExample('apple.com')" class="text-brand-light hover:underline">Apple</button>,
+        <button onclick="fillExample('https://twitter.com/en/privacy')" class="text-brand-light hover:underline">Twitter/X</button>
       </p>
     </div>
 
@@ -209,8 +165,17 @@
           <div class="absolute inset-0 rounded-full animate-pulse-slow" style="background:rgba(99,102,241,0.1);"></div>
         </div>
         <div>
-          <p class="text-white font-semibold" id="loadingText">Fetching policy page...</p>
-          <p class="text-gray-500 text-sm mt-1">This may take 10–30 seconds</p>
+          <p class="text-white font-semibold" id="loadingText">Locating official privacy policy...</p>
+          <p class="text-gray-500 text-sm mt-1">This may take 15–45 seconds</p>
+        </div>
+        <!-- Step indicators -->
+        <div class="flex gap-3 mt-2" id="stepIndicators">
+          <span id="step1Badge" class="step-indicator active">
+            <span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span> Step 1: Discovering URL
+          </span>
+          <span id="step2Badge" class="step-indicator">
+            <span class="w-1.5 h-1.5 rounded-full bg-current"></span> Step 2: Analyzing Policy
+          </span>
         </div>
         <div class="flex gap-1 mt-2">
           <div class="w-2 h-2 rounded-full bg-brand animate-bounce" style="animation-delay:0ms"></div>
@@ -244,6 +209,23 @@
         <p class="text-xs font-mono text-gray-500 truncate max-w-xs" id="scannedUrl"></p>
         <p class="text-xs text-gray-600" id="scannedAt"></p>
       </div>
+
+      <!-- Scanned Source badge -->
+      <div id="sourceRow" class="hidden mb-4 animate-fade-in">
+        <div class="source-badge">
+          <svg class="w-3.5 h-3.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round"
+              d="M13.19 8.688a4.5 4.5 0 011.242 7.244l-4.5 4.5a4.5 4.5 0 01-6.364-6.364l1.757-1.757m9.86-2.63a4.5 4.5 0 00-1.242-7.244l-4.5-4.5a4.5 4.5 0 00-6.364 6.364L4.34 8.798" />
+          </svg>
+          <span>Scanned Source:</span>
+          <a id="sourceLink" href="#" target="_blank" rel="noopener noreferrer"
+            class="text-brand-light hover:underline truncate"></a>
+        </div>
+      </div>
+
+      <!-- Analysis method badge -->
+      <div id="methodBadge" class="hidden mb-4 animate-fade-in text-xs font-semibold px-3 py-1.5 rounded-lg inline-block"
+        style="border: 1px solid transparent;"></div>
 
       <!-- LABEL CARD -->
       <div class="rounded-2xl card-border glow overflow-hidden" style="background:#16162a;">
@@ -299,29 +281,46 @@
 
   <!-- ── FOOTER ── -->
   <footer class="relative z-10 border-t border-surface-border py-6 text-center text-xs text-gray-700">
-    PrivaScan &mdash; Built with PHP &amp; Gemini 1.5 Flash &bull; Running on XAMPP
+    PrivaScan &mdash; Built with PHP &amp; Gemini 2.5 Flash &bull; Running on XAMPP
   </footer>
 
   <!-- ── JAVASCRIPT ── -->
   <script>
-    const loadingMessages = [
-      'Fetching policy page...',
-      'Extracting legal text...',
-      'Sending to Gemini AI...',
-      'Analyzing data practices...',
-      'Building your label...'
+    // Two-phase loading messages
+    const phase1Messages = [
+      'Locating official privacy policy...',
+      'Searching for the right URL...',
+      'Querying AI for policy location...'
     ];
-    let loadingInterval = null;
+    const phase2Messages = [
+      'Scanning and analyzing legal text...',
+      'Extracting data practices...',
+      'Building your privacy label...'
+    ];
 
-    function fillExample(url) {
-      document.getElementById('policyUrl').value = url;
+    let loadingInterval = null;
+    let loadingPhase = 1;
+
+    function fillExample(val) {
+      document.getElementById('policyInput').value = val;
+    }
+
+    function transitionToPhase2() {
+      loadingPhase = 2;
+      const step1 = document.getElementById('step1Badge');
+      const step2 = document.getElementById('step2Badge');
+      step1.className = 'step-indicator done';
+      step1.innerHTML = '<span>✓</span> Step 1: URL Found';
+      step2.className = 'step-indicator active';
+      step2.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span> Step 2: Analyzing Policy';
+      document.getElementById('loadingText').textContent = phase2Messages[0];
     }
 
     function setLoading(on) {
       const btn = document.getElementById('scanBtn');
       const icon = document.getElementById('btnIcon');
       const text = document.getElementById('btnText');
-      const input = document.getElementById('policyUrl');
+      const input = document.getElementById('policyInput');
       const loader = document.getElementById('loading');
 
       btn.disabled = on;
@@ -329,15 +328,34 @@
       loader.classList.toggle('hidden', !on);
 
       if (on) {
+        loadingPhase = 1;
         icon.innerHTML = '';
         text.textContent = 'Analyzing...';
+
+        // Reset step badges
+        const step1 = document.getElementById('step1Badge');
+        const step2 = document.getElementById('step2Badge');
+        step1.className = 'step-indicator active';
+        step1.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-current animate-pulse"></span> Step 1: Discovering URL';
+        step2.className = 'step-indicator';
+        step2.innerHTML = '<span class="w-1.5 h-1.5 rounded-full bg-current"></span> Step 2: Analyzing Policy';
+
+        document.getElementById('loadingText').textContent = phase1Messages[0];
+
         let i = 0;
         loadingInterval = setInterval(() => {
-          document.getElementById('loadingText').textContent = loadingMessages[i % loadingMessages.length];
           i++;
-        }, 3000);
+          const msgs = loadingPhase === 1 ? phase1Messages : phase2Messages;
+          document.getElementById('loadingText').textContent = msgs[i % msgs.length];
+        }, 3500);
+
+        // Auto-transition to phase 2 after ~8 seconds as a visual cue
+        setTimeout(() => {
+          if (loadingPhase === 1) transitionToPhase2();
+        }, 8000);
       } else {
         clearInterval(loadingInterval);
+        loadingPhase = 1;
         text.textContent = 'Scan Policy';
         icon.innerHTML = `<path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 15.803 7.5 7.5 0 0015.803 15.803z"/>`;
       }
@@ -357,6 +375,35 @@
       // URL + timestamp
       document.getElementById('scannedUrl').textContent = data.scanned_url || '';
       document.getElementById('scannedAt').textContent = data.scanned_at || '';
+
+      // Scanned Source badge (show discovered URL + analysis method)
+      const sourceRow = document.getElementById('sourceRow');
+      const sourceLink = document.getElementById('sourceLink');
+      const methodBadge = document.getElementById('methodBadge');
+      if (data.scanned_url) {
+        sourceRow.classList.remove('hidden');
+        sourceLink.href = data.scanned_url;
+        sourceLink.textContent = data.scanned_url;
+        sourceLink.title = data.scanned_url;
+      } else {
+        sourceRow.classList.add('hidden');
+      }
+      // Show analysis method
+      if (methodBadge) {
+        if (data.analysis_method === 'ai_knowledge') {
+          methodBadge.classList.remove('hidden');
+          methodBadge.innerHTML = '🧠 Analyzed via AI Knowledge Base (site blocked scraping)';
+          methodBadge.style.background = 'rgba(234,179,8,0.1)';
+          methodBadge.style.borderColor = 'rgba(234,179,8,0.3)';
+          methodBadge.style.color = '#facc15';
+        } else {
+          methodBadge.classList.remove('hidden');
+          methodBadge.innerHTML = '✓ Analyzed via Direct Scrape';
+          methodBadge.style.background = 'rgba(34,197,94,0.1)';
+          methodBadge.style.borderColor = 'rgba(34,197,94,0.3)';
+          methodBadge.style.color = '#4ade80';
+        }
+      }
 
       // Summary
       document.getElementById('summary').textContent = data.summary || '';
@@ -397,7 +444,8 @@
 
       // Chars analyzed
       const chars = data.chars_analyzed || 0;
-      document.getElementById('charsAnalyzed').textContent = chars.toLocaleString() + ' characters';
+      document.getElementById('charsAnalyzed').textContent =
+        chars > 0 ? chars.toLocaleString() + ' characters' : 'AI Knowledge Base';
 
       // Red Flags
       const flags = Array.isArray(data.red_flags) ? data.red_flags : [];
@@ -423,16 +471,10 @@
     }
 
     async function startScan() {
-      const url = document.getElementById('policyUrl').value.trim();
+      const query = document.getElementById('policyInput').value.trim();
 
-      if (!url) {
-        showError('Please enter a Privacy Policy URL before scanning.');
-        return;
-      }
-
-      // Basic URL sanity check client-side
-      try { new URL(url); } catch {
-        showError('Please enter a valid URL (must start with http:// or https://).');
+      if (!query) {
+        showError('Please enter a company name or privacy policy URL before scanning.');
         return;
       }
 
@@ -444,7 +486,7 @@
         const response = await fetch('api.php', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url })
+          body: JSON.stringify({ query })
         });
 
         const data = await response.json();
@@ -464,8 +506,8 @@
       }
     }
 
-    // Allow pressing Enter inside the URL input
-    document.getElementById('policyUrl').addEventListener('keydown', e => {
+    // Allow pressing Enter inside the input
+    document.getElementById('policyInput').addEventListener('keydown', e => {
       if (e.key === 'Enter') startScan();
     });
   </script>
